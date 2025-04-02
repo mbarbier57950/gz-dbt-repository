@@ -1,4 +1,4 @@
-version: 2
+crversion: 2
 
 sources:
   - name: raw
@@ -36,3 +36,83 @@ sources:
               - unique
               - not_null
   
+#intermediate models
+
+models:
+  - name: int_sales_margin
+    description: marge dégagé pour chaque produits et commandes
+    columns:
+      - name: "(orders_id || '-' || products_id)"
+        description: primary key de la table
+        tests:
+          - unique
+          - not_null
+
+  - name: int_order_margin
+    description: kpi par commande et par date
+    columns:
+      - name: orders_id 
+        description: primary key de la table
+        tests:
+          - not_null
+          - unique
+      - name: date_date
+        description: date d'achat de la commande
+        tests:
+          - not_null
+      - name: revenue 
+        description: chiffre d'affaires par commande
+        tests:
+          - not_null
+      - name: quantity
+        description: quantité de produits par commande 
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: prix d'achat d'une commande
+        tests:
+          - not_null
+      - name: margin
+        description: marge dégagée par commande
+        tests:
+          - not_null
+  - name: int_orders_operational
+    description: kpi opérationnels par commande et par date
+    columns:
+      - name: orders_id 
+        description: primary key de la table
+        tests:
+          - not_null
+          - unique
+      - name: date_date
+        description: date d'achat de la commande
+        tests:
+          - not_null
+      - name: revenue 
+        description: chiffre d'affaires par commande
+        tests:
+          - not_null
+      - name: margin
+        description: marge dégagée par commande
+        tests:
+          - not_null
+      - name: operational_margin
+        description: marge opérationnelle - sans les couts liés au transport - par commande
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: prix d'achat d'une commande
+        tests:
+          - not_null
+      - name: log_cost
+        description: coût logistique par commande pour Greenweez
+        tests:
+          - not_null
+      - name: shipping_cost
+        description: frais de transport par commande pour Greenweez
+        tests:
+          - not_null
+      - name: quantity
+        description: quantité de produits par commande 
+        tests:
+          - not_null
